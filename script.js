@@ -1,89 +1,45 @@
-const wordPools = {
-  tech: {
-    adjectives: ["Neo", "Smart", "Cyber", "Auto", "Next", "Quantum", "Deep", "Pixel"],
-    nouns: ["Pulse", "Core", "Verse", "Bot", "Cloud", "Circuit", "Stack"]
-  },
-  finance: {
-    adjectives: ["Safe", "Quick", "Bright", "Coin", "Cash", "Trust", "Vault"],
-    nouns: ["Bank", "Ledger", "Capital", "Fund", "Pay", "Flow"]
-  },
-  health: {
-    adjectives: ["Fit", "Vital", "Cura", "Heal", "Well", "Pure", "Zen"],
-    nouns: ["Care", "Track", "Life", "Health", "Scan", "Dose"]
-  },
-  education: {
-    adjectives: ["Learn", "Bright", "Edu", "Smart", "Skill", "Know", "Neo"],
-    nouns: ["Mind", "Labs", "Verse", "Stack", "School", "Hub"]
-  },
-  custom: {
-    adjectives: ["Bold", "Nova", "Quick", "Bright", "Ultra", "Vibe", "Next"],
-    nouns: ["Nest", "Box", "Hive", "Core", "Desk", "Gen"]
-  }
-};
-
-const suffixes = ["ly", "hub", "gen", "ify", "stack", "base", "io"];
-
-let currentName = "";
-let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-renderFavorites();
+const techWords = ["AI", "Neuro", "Byte", "Quantum", "Cloud", "Pixel", "Nano"];
+const financeWords = ["Fin", "Pay", "Bank", "Safe", "Invest", "Cash", "Coin"];
+const healthWords = ["Medi", "Care", "Well", "Pulse", "Cure", "Vitals", "Thera"];
+const educationWords = ["Learn", "Skill", "Mind", "Edu", "Tutor", "Path", "Acad"];
+const randomWords = ["Spark", "Nest", "Core", "Shift", "Hive", "Loop", "Zen"];
 
 function generateName() {
   const category = document.getElementById("category").value;
-  const words = wordPools[category] || wordPools["custom"];
+  let baseList = [];
 
-  const adj = words.adjectives[Math.floor(Math.random() * words.adjectives.length)];
-  const noun = words.nouns[Math.floor(Math.random() * words.nouns.length)];
-  const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
-
-  currentName = (adj + noun + suffix).toLowerCase();
-  document.getElementById("generatedName").textContent = currentName;
-  document.getElementById("domainStatus").textContent = "";
-}
-
-function checkDomain() {
-  if (!currentName) {
-    alert("Generate a name first!");
-    return;
+  switch (category) {
+    case "tech":
+      baseList = techWords;
+      break;
+    case "finance":
+      baseList = financeWords;
+      break;
+    case "health":
+      baseList = healthWords;
+      break;
+    case "education":
+      baseList = educationWords;
+      break;
+    default:
+      baseList = [...techWords, ...financeWords, ...healthWords, ...educationWords, ...randomWords];
   }
 
-  const available = Math.random() > 0.4; // Simulate 60% availability
-  document.getElementById("domainStatus").textContent = available
-    ? `✅ ${currentName}.com is likely available!`
-    : `❌ ${currentName}.com is likely taken.`;
+  const prefix = baseList[Math.floor(Math.random() * baseList.length)];
+  const suffix = randomWords[Math.floor(Math.random() * randomWords.length)];
+  const name = prefix + suffix;
+
+  document.getElementById("output").textContent = `🚀 ${name}`;
 }
 
-function addToFavorites() {
-  if (!currentName || favorites.includes(currentName)) return;
-  favorites.push(currentName);
-  localStorage.setItem("favorites", JSON.stringify(favorites));
-  renderFavorites();
-}
-
-function renderFavorites() {
-  const list = document.getElementById("favoritesList");
-  list.innerHTML = "";
-  favorites.forEach(name => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      🔹 ${name}.com
-      <button onclick="removeFavorite('${name}')">🗑️</button>
-    `;
-    list.appendChild(li);
-  });
-}
-
-function removeFavorite(name) {
-  favorites = favorites.filter(n => n !== name);
-  localStorage.setItem("favorites", JSON.stringify(favorites));
-  renderFavorites();
-}
-
-// Dark mode toggle
-document.getElementById("themeToggle").addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
-});
-
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark");
+function updateCategoryNote() {
+  const category = document.getElementById("category").value;
+  const notes = {
+    tech: "🔍 Tech category creates AI and futuristic names.",
+    finance: "💰 Finance names use trust, speed, and money-related words.",
+    health: "🩺 Health names focus on wellness and care.",
+    education: "📘 Education names are about learning and knowledge.",
+    custom: "🎲 Random mix of brandable words for variety."
+  };
+  document.getElementById("categoryNote").textContent = notes[category] || "";
 }
