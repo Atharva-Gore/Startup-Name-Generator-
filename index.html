@@ -3,27 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🚀 AI Startup Name Generator</title>
+  <title>🚀 Startup Name Generator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>🚀 AI Startup Name Generator</h1>
+    <h1>🚀 Startup Name Generator</h1>
+    <p>Create unique and brandable AI startup names with domain suggestions.</p>
 
-    <div class="input-group">
-      <label for="category">Select Category:</label>
-      <select id="category" onchange="updateCategoryNote()">
-        <option value="tech">AI/Tech</option>
-        <option value="finance">Finance</option>
-        <option value="health">Health</option>
-        <option value="education">Education</option>
-        <option value="custom">Random</option>
-      </select>
-      <p id="categoryNote" class="note">🔍 Tech category creates AI and futuristic names.</p>
+    <label for="category">Select Category:</label>
+    <select id="category">
+      <option value="tech">Tech</option>
+      <option value="finance">Finance</option>
+      <option value="health">Health</option>
+      <option value="education">Education</option>
+    </select>
+
+    <button onclick="generateName()">💕 Generate Name</button>
+
+    <div class="output" id="output"></div>
+    <div class="domain-status" id="domainStatus"></div>
+
+    <div class="buttons-group">
+      <button onclick="checkDomain()">🌐 Check Domain</button>
+      <button onclick="saveName()">⭐ Save</button>
     </div>
 
-    <button onclick="generateName()">✨ Generate Name</button>
-    <div id="output" class="output"></div>
+    <h3>⭐ Saved Names</h3>
+    <ul id="savedList"></ul>
+
+    <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
   </div>
 
   <script src="script.js"></script>
