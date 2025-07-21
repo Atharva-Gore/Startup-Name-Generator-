@@ -1,0 +1,50 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f0f0f0;
+  color: #222;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark {
+  background: #121212;
+  color: #fff;
+}
+
+.container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+body.dark .container {
+  background: #1e1e1e;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#generatedName {
+  font-size: 1.5em;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+#domainStatus {
+  margin-top: 10px;
+  font-style: italic;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
