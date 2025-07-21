@@ -1,33 +1,57 @@
-const adjectives = ["Smart", "Quick", "Bright", "Tech", "Next", "Neo", "Cyber", "Auto", "AI"];
-const nouns = ["Hive", "Nest", "Bot", "Verse", "Core", "Flow", "Labs", "Shift", "Pulse"];
-const suffixes = ["ly", "ify", "hub", "gen", "base", "stack", "zone"];
+const wordPools = {
+  tech: {
+    adjectives: ["Neo", "Smart", "Cyber", "Auto", "Next", "Quantum", "Deep", "Pixel"],
+    nouns: ["Pulse", "Core", "Verse", "Bot", "Cloud", "Circuit", "Stack"]
+  },
+  finance: {
+    adjectives: ["Safe", "Quick", "Bright", "Coin", "Cash", "Trust", "Vault"],
+    nouns: ["Bank", "Ledger", "Capital", "Fund", "Pay", "Flow"]
+  },
+  health: {
+    adjectives: ["Fit", "Vital", "Cura", "Heal", "Well", "Pure", "Zen"],
+    nouns: ["Care", "Track", "Life", "Health", "Scan", "Dose"]
+  },
+  education: {
+    adjectives: ["Learn", "Bright", "Edu", "Smart", "Skill", "Know", "Neo"],
+    nouns: ["Mind", "Labs", "Verse", "Stack", "School", "Hub"]
+  },
+  custom: {
+    adjectives: ["Bold", "Nova", "Quick", "Bright", "Ultra", "Vibe", "Next"],
+    nouns: ["Nest", "Box", "Hive", "Core", "Desk", "Gen"]
+  }
+};
+
+const suffixes = ["ly", "hub", "gen", "ify", "stack", "base", "io"];
 
 let currentName = "";
-const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 renderFavorites();
 
-// Generate a random startup name
 function generateName() {
-  const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
-  const noun = nouns[Math.floor(Math.random() * nouns.length)];
+  const category = document.getElementById("category").value;
+  const words = wordPools[category] || wordPools["custom"];
+
+  const adj = words.adjectives[Math.floor(Math.random() * words.adjectives.length)];
+  const noun = words.nouns[Math.floor(Math.random() * words.nouns.length)];
   const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+
   currentName = (adj + noun + suffix).toLowerCase();
   document.getElementById("generatedName").textContent = currentName;
   document.getElementById("domainStatus").textContent = "";
 }
 
-// Check if domain is available (mock logic)
 function checkDomain() {
-  if (!currentName) return alert("Generate a name first!");
-  
-  // Fake random check (simulate real domain check)
-  const available = Math.random() > 0.5;
-  document.getElementById("domainStatus").textContent = available 
+  if (!currentName) {
+    alert("Generate a name first!");
+    return;
+  }
+
+  const available = Math.random() > 0.4; // Simulate 60% availability
+  document.getElementById("domainStatus").textContent = available
     ? `✅ ${currentName}.com is likely available!`
     : `❌ ${currentName}.com is likely taken.`;
 }
 
-// Save to favorites
 function addToFavorites() {
   if (!currentName || favorites.includes(currentName)) return;
   favorites.push(currentName);
@@ -35,31 +59,26 @@ function addToFavorites() {
   renderFavorites();
 }
 
-// Show favorites
 function renderFavorites() {
   const list = document.getElementById("favoritesList");
   list.innerHTML = "";
   favorites.forEach(name => {
     const li = document.createElement("li");
     li.innerHTML = `
-      ${name}.com
-      <button onclick="removeFavorite('${name}')">❌</button>
+      🔹 ${name}.com
+      <button onclick="removeFavorite('${name}')">🗑️</button>
     `;
     list.appendChild(li);
   });
 }
 
-// Remove from favorites
 function removeFavorite(name) {
-  const index = favorites.indexOf(name);
-  if (index > -1) {
-    favorites.splice(index, 1);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-    renderFavorites();
-  }
+  favorites = favorites.filter(n => n !== name);
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  renderFavorites();
 }
 
-// Toggle dark mode
+// Dark mode toggle
 document.getElementById("themeToggle").addEventListener("click", () => {
   document.body.classList.toggle("dark");
   localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
