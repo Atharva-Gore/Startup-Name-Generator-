@@ -8,21 +8,34 @@
 </head>
 <body>
   <div class="container">
-    <h1>🚀 AI Startup Name Generator</h1>
-    
-    <button onclick="generateName()">Generate Name</button>
+    <h1>🚀 Startup Name Generator</h1>
+    <p>Create unique and brandable AI startup names with domain suggestions.</p>
+
+    <div class="input-group">
+      <label for="category">Select Category:</label>
+      <select id="category">
+        <option value="tech">AI/Tech</option>
+        <option value="finance">Finance</option>
+        <option value="health">Health</option>
+        <option value="education">Education</option>
+        <option value="custom">Random</option>
+      </select>
+    </div>
+
+    <button onclick="generateName()">🎯 Generate Name</button>
     
     <div id="generatedName"></div>
-    
-    <button onclick="checkDomain()">Check Domain Availability</button>
     <div id="domainStatus"></div>
 
-    <button onclick="addToFavorites()">⭐ Save to Favorites</button>
-    
-    <h3>Favorites</h3>
+    <div class="actions">
+      <button onclick="checkDomain()">🌐 Check Domain</button>
+      <button onclick="addToFavorites()">⭐ Save</button>
+    </div>
+
+    <h3>⭐ Saved Names</h3>
     <ul id="favoritesList"></ul>
 
-    <button id="themeToggle">🌙 Toggle Dark Mode</button>
+    <button id="themeToggle" class="dark-toggle">🌙 Dark Mode</button>
   </div>
 
   <script src="script.js"></script>
