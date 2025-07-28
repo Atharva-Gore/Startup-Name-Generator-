@@ -8,31 +8,30 @@
 </head>
 <body>
   <div class="container">
-    <h1>🚀 Startup Name Generator</h1>
-    <p>Create unique and brandable AI startup names with domain suggestions.</p>
+    <header>
+      <h1>🚀 Startup Name Generator</h1>
+      <button id="toggleMode">🌙</button>
+    </header>
 
-    <label for="category">Select Category:</label>
-    <select id="category">
-      <option value="tech">Tech</option>
-      <option value="finance">Finance</option>
-      <option value="health">Health</option>
-      <option value="education">Education</option>
-    </select>
-
-    <button onclick="generateName()">💕 Generate Name</button>
-
-    <div class="output" id="output"></div>
-    <div class="domain-status" id="domainStatus"></div>
-
-    <div class="buttons-group">
-      <button onclick="checkDomain()">🌐 Check Domain</button>
-      <button onclick="saveName()">⭐ Save</button>
+    <div class="controls">
+      <select id="category">
+        <option value="tech">Tech</option>
+        <option value="ai">AI</option>
+        <option value="finance">Finance</option>
+        <option value="health">Health</option>
+        <option value="education">Education</option>
+        <option value="fashion">Fashion</option>
+        <option value="food">Food</option>
+        <option value="travel">Travel</option>
+      </select>
+      <button onclick="generateName()">Generate</button>
     </div>
 
-    <h3>⭐ Saved Names</h3>
-    <ul id="savedList"></ul>
+    <div id="result" class="result-box"></div>
+    <button id="favoriteBtn" style="display:none;">❤️ Save to Favorites</button>
 
-    <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+    <h2>⭐ Favorites</h2>
+    <ul id="favorites"></ul>
   </div>
 
   <script src="script.js"></script>
